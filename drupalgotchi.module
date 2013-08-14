@@ -1,0 +1,19 @@
+<?php
+/**
+ * @file
+ * Turns your site into a cute animal that needs attention.
+ */
+
+/**
+ * Implements hook_permission().
+ */
+function drupalgotchi_permission() {
+  $permissions = array();
+
+  $permissions['administer drupalgotchi'] = array(
+    'title' => t('administer drupalgotchi'),
+    'description' => t('Change the attributes of the Drupalgotchi.'),
+  );
+
+  return $permissions;
+}
