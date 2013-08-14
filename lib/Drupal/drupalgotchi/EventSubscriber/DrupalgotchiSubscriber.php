@@ -37,20 +37,16 @@ class DrupalgotchiSubscriber implements EventSubscriberInterface {
     if ($event->getRequestType() !== KernelInterface::MASTER_REQUEST) {
       return;
     }
-    // Note: this doesn't work.
-    if ($event->getRequest()->attributes->get('_controller') !== 'controller.page:content') {
-      return;
-    }
 
     $happiness = $this->state->get('drupalgotchi.happiness') ?: 0;
 
-    // If the user can make Drupalgotchi happy, increase happiness.
+    // If the user can make Drupalgotchi happy, increase happiness by one.
     if ($event->getRequest()->attributes->get('_account')->hasPermission('make drupalgotchi happy')) {
       $happiness++;
     }
-    // Otherwise, decrease happiness.
+    // Otherwise, decrease happiness by the neediness amount.
     else {
-      $happiness--;
+      $happiness -= $this->config->get('needy');
     }
 
     $this->state->set('drupalgotchi.happiness', $happiness);
@@ -71,10 +67,6 @@ class DrupalgotchiSubscriber implements EventSubscriberInterface {
         '@name' => $this->config->get('name'),
       )));
     }
-
-    drupal_set_message($this->translation_manager->translate("Currently happiness is %happiness.", array(
-      '%happiness' => $happiness,
-    )));
   }
 
   /**
@@ -85,6 +77,4 @@ class DrupalgotchiSubscriber implements EventSubscriberInterface {
     $events[KernelEvents::REQUEST][] = array('onKernelRequestShowHappiness', 2);
     return $events;
   }
-
 }
-
