@@ -9,7 +9,7 @@ function drupalgotchi_permission() {
       'title' => t('Change the Drupalgotchi settings'),
     ),
     'make drupalgotchi happy' => array(
-      'title' => t('Make Drupalgotchi happy'),
+      'title' => t('Perform tasks to make the site happier'),
     ),
   );
 }
@@ -32,7 +32,6 @@ function drupalgotchi_menu() {
 
   return $items;
 }
-
 
 /**
  * Implements hook_theme().
