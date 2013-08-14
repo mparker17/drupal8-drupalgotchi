@@ -61,6 +61,6 @@ class ResetForm implements FormInterface {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, array &$form_state) {
-
+    // TODO: Fire a Drupal\drupalgotchi\Plugin\Action\SetDrupalgotchi.
   }
 }

@@ -70,7 +70,7 @@ class ResetBlock extends BlockBase implements ContainerFactoryPluginInterface {
    * {@inheritdoc}
    */
   public function build() {
-
+    // Return a Drupal\drupalgotchi\Form\ResetForm
   }
 
 }
