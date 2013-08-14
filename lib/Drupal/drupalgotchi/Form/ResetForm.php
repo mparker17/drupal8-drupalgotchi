@@ -34,7 +34,10 @@ class ResetForm implements FormInterface {
    */
   protected $config;
 
-  public function __construct() {
+  public function __construct(ActionManager $actions_manager, TranslationManager $translation, Config $config) {
+    $this->actionsManager = $actions_manager;
+    $this->translation = $translation;
+    $this->config = $config;
   }
 
   /**
