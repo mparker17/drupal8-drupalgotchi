@@ -48,11 +48,15 @@ class DrupalgotchiBlock extends BlockBase implements ContainerFactoryPluginInter
     return new static(
       $configuration,
       $plugin_id,
-      $plugin_definition
+      $plugin_definition,
+      $container->get('state'),
+      $container->get('config.factory')->get('drupalgotchi.settings')
     );
   }
 
-  public function __construct(array $configuration, $plugin_id, array $plugin_definition) {
+  public function __construct(array $configuration, $plugin_id, array $plugin_definition, KeyValueStoreInterface $state, Config $config) {
+    $this->state = $state;
+    $this->config = $config;
     parent::__construct($configuration, $plugin_id, $plugin_definition);
   }
 
@@ -60,7 +64,10 @@ class DrupalgotchiBlock extends BlockBase implements ContainerFactoryPluginInter
    * {@inheritdoc}
    */
   public function build() {
-
+    return array(
+      '#theme' => 'drupalgotchi_status_block',
+      '#happiness' => $this->state->get('drupalgotchi.attention'),
+      '#name' => $this->config->get('name'),
+    );
   }
-
 }

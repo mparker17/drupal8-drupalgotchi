@@ -86,31 +86,10 @@ class DrupalgotchiSubscriber implements EventSubscriberInterface {
   }
 
   /**
-   * Responds to kernel event to display level.
-   *
-   * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $event
-   *   The system event.
-   */
-  public function onKernelRequestShowHappiness(GetResponseEvent $event) {
-    if ($event->getRequestType() != KernelInterface::MASTER_REQUEST) {
-      return;
-    }
-
-    $attention_quotient = $this->state->get('drupalgotchi.attention') ?: 0;
-    if ($attention_quotient <= 0) {
-      $message = $this->translator->translate('@name misses its owner. Please come back! @name has a sad. :-(', array(
-        '@name' => $this->config->get('name'),
-      ));
-      drupal_set_message($message);
-    }
-  }
-
-  /**
    * Registers event subscribers.
    */
   public static function getSubscribedEvents() {
     $events[KernelEvents::REQUEST][] = array('onKernelRequestSetHappiness', 5);
-    $events[KernelEvents::REQUEST][] = array('onKernelRequestShowHappiness', 2);
     return $events;
   }
 

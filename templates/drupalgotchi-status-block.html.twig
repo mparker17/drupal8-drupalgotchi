@@ -1,3 +1,9 @@
 <section{{ attributes }}>
-
+  {% if happiness <= -50 %}
+    {{ name }} is very unhappy.
+  {% elseif happiness > -50 and happiness <= 0 %}
+    {{ name }} is moderately unhappy.
+  {% else %}
+    {{ name }} is happy.
+  {% endif %}
 </section>
