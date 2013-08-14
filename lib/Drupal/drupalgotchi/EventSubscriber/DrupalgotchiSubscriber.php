@@ -64,13 +64,6 @@ class DrupalgotchiSubscriber implements EventSubscriberInterface {
       return;
     }
 
-    // Note: there's an issue here because Drupal makes THREE requests per page.
-    // One for the page, one for toolbar, one for contextual links. This is a
-    // decent way around that.
-    if ($event->getRequest()->attributes->get('_controller') != 'controller.page:content') {
-      return;
-    }
-
     $attention_quotient = $this->state->get('drupalgotchi.attention') ?: 0;
 
     if ($event->getRequest()->attributes->get('_account')->hasPermission('make drupalgotchi happy')) {
