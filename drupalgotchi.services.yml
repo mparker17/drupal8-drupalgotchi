@@ -1,0 +1,5 @@
+services:
+  drupalgotchi.subscriber:
+    class: Drupal\drupalgotchi\EventSubscriber\DrupalgotchiSubscriber
+    tags:
+      - { name: event_subscriber }

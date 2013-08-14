@@ -1,3 +1,5 @@
+# Schema for the configuration files of the Action module.
+
 drupalgotchi.settings:
   type: mapping
   label: 'Drupalgotchi settings'

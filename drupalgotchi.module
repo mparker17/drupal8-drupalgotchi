@@ -1,19 +1,44 @@
 <?php
-/**
- * @file
- * Turns your site into a cute animal that needs attention.
- */
 
 /**
  * Implements hook_permission().
  */
 function drupalgotchi_permission() {
-  $permissions = array();
+  return array(
+    'administer drupalgotchi' => array(
+      'title' => t('Change the Drupalgotchi settings'),
+    ),
+  );
+}
 
-  $permissions['administer drupalgotchi'] = array(
-    'title' => t('administer drupalgotchi'),
-    'description' => t('Change the attributes of the Drupalgotchi.'),
+/**
+ * Implements hook_menu().
+ */
+function drupalgotchi_menu() {
+  $items['drupalgotchi'] = array(
+    'title' => 'Drupalgotchi',
+    'description' => 'The requisite hello-world page.',
+    'route_name' => 'drupalgotchi_hello',
   );
 
-  return $permissions;
+  $items['admin/config/system/drupalgotchi'] = array(
+    'title' => 'Configure Drupalgotchi',
+    'description' => 'Setup the Drupalgotchi for your site.',
+    'route_name' => 'drupalgotchi_settings',
+  );
+
+  return $items;
+}
+
+
+/**
+ * Implements hook_theme().
+ */
+function drupalgotchi_theme() {
+  return array(
+    'drupalgotchi_hello' => array(
+      'variables' => array('name' => NULL, 'person' => NULL),
+      'template' => 'drupalgotchi-hello',
+    ),
+  );
 }
