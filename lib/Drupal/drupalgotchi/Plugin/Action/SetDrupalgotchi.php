@@ -61,10 +61,8 @@ class SetDrupalgotchi extends ActionBase implements ContainerFactoryPluginInterf
   /**
    * {@inheritdoc}
    */
-  public function execute() {
-    // TODO: Set state to value passed in.
-    $value_passed_in = 0;
-    $this->state->set('drupalgotchi.attention', $value_passed_in);
+  public function execute($value) {
+    $this->state->set('drupalgotchi.attention', $value);
   }
 
 }

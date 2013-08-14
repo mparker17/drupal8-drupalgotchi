@@ -66,6 +66,10 @@ class ResetForm implements FormInterface {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, array &$form_state) {
-    // TODO: Fire a Drupal\drupalgotchi\Plugin\Action\SetDrupalgotchi.
+    $this->actionsManager->createInstance('drupalgotchi_set_attention')->execute(0);
+
+    drupal_set_message($this->translation->translate("@name's attention level has been reset.", array(
+      '@name' => $this->config->get('name'),
+    )));
   }
 }
