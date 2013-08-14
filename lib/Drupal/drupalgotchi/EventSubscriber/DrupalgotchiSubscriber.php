@@ -64,13 +64,6 @@ class DrupalgotchiSubscriber implements EventSubscriberInterface {
       return;
     }
 
-    // Note: there's an issue here because Drupal makes THREE requests per page.
-    // One for the page, one for toolbar, one for contextual links. This is a
-    // decent way around that.
-    if ($event->getRequest()->attributes->get('_controller') != 'controller.page:content') {
-      return;
-    }
-
     $attention_quotient = $this->state->get('drupalgotchi.attention') ?: 0;
 
     if ($event->getRequest()->attributes->get('_account')->hasPermission('make drupalgotchi happy')) {
@@ -86,38 +79,10 @@ class DrupalgotchiSubscriber implements EventSubscriberInterface {
   }
 
   /**
-   * Responds to kernel event to display level.
-   *
-   * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $event
-   *   The system event.
-   */
-  public function onKernelRequestShowHappiness(GetResponseEvent $event) {
-    if ($event->getRequestType() != KernelInterface::MASTER_REQUEST) {
-      return;
-    }
-
-    // Note: there's an issue here because Drupal makes THREE requests per page.
-    // One for the page, one for toolbar, one for contextual links. This is a
-    // decent way around that.
-    if ($event->getRequest()->attributes->get('_controller') != 'controller.page:content') {
-      return;
-    }
-
-    $attention_quotient = $this->state->get('drupalgotchi.attention') ?: 0;
-    if ($attention_quotient <= 0) {
-      $message = $this->translator->translate('@name misses its owner. Please come back! @name has a sad. :-(', array(
-        '@name' => $this->config->get('name'),
-      ));
-      drupal_set_message($message);
-    }
-  }
-
-  /**
    * Registers event subscribers.
    */
   public static function getSubscribedEvents() {
     $events[KernelEvents::REQUEST][] = array('onKernelRequestSetHappiness', 5);
-    $events[KernelEvents::REQUEST][] = array('onKernelRequestShowHappiness', 2);
     return $events;
   }
 
