@@ -59,26 +59,37 @@ class ResetBlock extends BlockBase implements ContainerFactoryPluginInterface {
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('state'),
-      $container->get('config.factory')->get('drupalgotchi.settings'),
+      $container->get('plugin.manager.action'),
       $container->get('string_translation'),
-      $container->get('plugin.manager.action')
+      $container->get('config.factory')->get('drupalgotchi.settings')
     );
   }
 
-  public function __construct(array $configuration, $plugin_id, array $plugin_definition, KeyValueStoreInterface $state, Config $config, TranslationManager $translation_manager, ActionManager $action_manager) {
+  /**
+   * Constructs a new DrupalgotchiBlock object.
+   *
+   * @param array $configuration
+   * @param type $plugin_id
+   * @param array $plugin_definition
+   * @param \Drupal\Core\Action\ActionManager $actions_manager
+   *   The actions system.
+   * @param \Drupal\Core\StringTranslation\TranslationManager $translator
+   *   The translation system.
+   * @param \Drupal\Core\Config\ConfigFactory $config_factory
+   *   The config factory service.
+   */
+  public function __construct(array $configuration, $plugin_id, array $plugin_definition, ActionManager $actions_manager, TranslationManager $translation, Config $config) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
-    $this->state = $state;
+    $this->actionsManager = $actions_manager;
+    $this->translation = $translation;
     $this->config = $config;
-    $this->translation = $translation_manager;
-    $this->actionsManager = $action_manager;
   }
 
   /**
    * {@inheritdoc}
    */
   public function build() {
-    $form_to_display = new ResetForm($this->actionsManager, $this->translation, $this->config);
-    return drupal_get_form($form_to_display);
+    return drupal_get_form(new ResetForm($this->actionsManager, $this->translation, $this->config));
   }
+
 }

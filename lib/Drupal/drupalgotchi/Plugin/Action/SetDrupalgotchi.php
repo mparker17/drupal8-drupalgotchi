@@ -54,15 +54,15 @@ class SetDrupalgotchi extends ActionBase implements ContainerFactoryPluginInterf
    *   The state service.
    */
   public function __construct(array $configuration, $plugin_id, array $plugin_definition, KeyValueStoreInterface $state) {
-    $this->state = $state;
     parent::__construct($configuration, $plugin_id, $plugin_definition);
+    $this->state = $state;
   }
 
   /**
    * {@inheritdoc}
    */
-  public function execute($value) {
-    $this->state->set('drupalgotchi.attention', $value);
+  public function execute($attention = 0) {
+    $this->state->set('drupalgotchi.attention', $attention);
   }
 
 }
