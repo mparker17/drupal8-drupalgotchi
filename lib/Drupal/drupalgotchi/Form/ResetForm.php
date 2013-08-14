@@ -48,9 +48,8 @@ class ResetForm implements FormInterface {
    * {@inheritdoc}
    */
   public function buildForm(array $form, array &$form_state) {
-
     $form['reset_button'] = array(
-      '#type' => 'button',
+      '#type' => 'submit',
       '#value' => $this->translation->translate('Reset'),
     );
 
